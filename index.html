@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام القبول الإلكتروني - الجامعة السعودية الإلكترونية</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Tajawal Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --seu-deep-blue: #003366;
+            --seu-gold: #C5A059;
+            --seu-light-gray: #f8f9fa;
+            --seu-dark-gray: #6c757d;
+            --seu-success: #28a745;
+        }
+        
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .seu-header {
+            background-color: var(--seu-deep-blue);
+            color: white;
+            padding: 1.5rem 0;
+            border-bottom: 4px solid var(--seu-gold);
+        }
+        
+        .seu-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+        }
+        
+        .seu-logo span {
+            color: var(--seu-gold);
+        }
+        
+        .seu-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            border-right: 4px solid var(--seu-deep-blue);
+        }
+        
+        .form-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-top: 3px solid var(--seu-deep-blue);
+        }
+        
+        .form-card h3 {
+            color: var(--seu-deep-blue);
+            border-bottom: 2px solid var(--seu-gold);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+        
+        .form-label {
+            font-weight: 700;
+            color: var(--seu-deep-blue);
+        }
+        
+        .btn-seu-primary {
+            background-color: var(--seu-deep-blue);
+            color: white;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-seu-primary:hover {
+            background-color: #002244;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,51,102,0.2);
+        }
+        
+        .btn-seu-secondary {
+            background-color: white;
+            color: var(--seu-deep-blue);
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border: 2px solid var(--seu-deep-blue);
+            transition: all 0.3s;
+        }
+        
+        .btn-seu-secondary:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+        }
+        
+        .summary-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--seu-gold);
+        }
+        
+        .summary-title {
+            color: var(--seu-deep-blue);
+            font-weight: 900;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dotted #eee;
+        }
+        
+        .summary-total {
+            font-weight: 900;
+            color: var(--seu-deep-blue);
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--seu-gold);
+        }
+        
+        .success-container {
+            text-align: center;
+            padding: 3rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+            border-top: 5px solid var(--seu-success);
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            color: var(--seu-success);
+            margin-bottom: 1.5rem;
+        }
+        
+        .ref-number {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.3rem;
+            color: var(--seu-deep-blue);
+            margin: 1.5rem 0;
+            border: 2px dashed var(--seu-gold);
+        }
+        
+        .success-message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-top: 2rem;
+            color: #333;
+        }
+        
+        .student-name {
+            color: var(--seu-deep-blue);
+            font-weight: 900;
+        }
+        
+        .alert-validation {
+            border-right: 4px solid #dc3545;
+            font-size: 0.9rem;
+        }
+        
+        .specialty-card {
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .specialty-card:hover {
+            border-color: var(--seu-deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .specialty-card.selected {
+            border-color: var(--seu-deep-blue);
+            background-color: rgba(0, 51, 102, 0.05);
+        }
+        
+        .specialty-title {
+            font-weight: 900;
+            color: var(--seu-deep-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .specialty-requirements {
+            font-size: 0.85rem;
+            color: var(--seu-dark-gray);
+        }
+        
+        .branch-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-right: 3px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .branch-card:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .branch-card.selected {
+            background-color: rgba(0, 51, 102, 0.1);
+            border-right: 3px solid var(--seu-gold);
+        }
+        
+        .branch-city {
+            font-weight: 900;
+            color: var(--seu-deep-blue);
+        }
+        
+        .branch-region {
+            font-size: 0.85rem;
+            color: var(--seu-dark-gray);
+        }
+        
+        .gpa-indicator {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .gpa-fill {
+            height: 100%;
+            background-color: var(--seu-deep-blue);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--seu-deep-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 51, 102, 0.25);
+        }
+        
+        .form-select:focus {
+            border-color: var(--seu-deep-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 51, 102, 0.25);
+        }
+        
+        .signature-container {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            height: 150px;
+            background-color: #f8f9fa;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        
+        .signature-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-size: 1.2rem;
+        }
+        
+        .signature-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .clear-signature {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+        
+        .bridging-section {
+            background-color: rgba(197, 160, 89, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-right: 3px solid var(--seu-gold);
+        }
+        
+        .fee-breakdown {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .fee-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .fee-vat {
+            color: #dc3545;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 1.5rem;
+            }
+            
+            .success-container {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- ترويسة الصفحة -->
+        <header class="seu-header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="seu-logo">
+                            <i class="bi bi-building"></i> الجامعة السعودية الإلكترونية <span>SEU</span>
+                        </div>
+                        <div class="seu-subtitle">
+                            نظام القبول والتسجيل الإلكتروني - تقديم طلب الالتحاق للعام الجامعي 2025
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <div class="d-none d-md-block">
+                            <i class="bi bi-headset"></i> الدعم الفني: 920033555
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- شريط التقدم -->
+        <div class="container mt-4" v-if="!submitted">
+            <div class="progress-container">
+                <h5 class="mb-3" style="font-weight: 900;">مراحل تقديم الطلب</h5>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-seu" role="progressbar" :style="{width: progressWidth}" 
+                         aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div :class="['text-center', currentStep >= 1 ? 'text-seu' : 'text-muted']">
+                        <i class="bi bi-person-circle fs-4 d-block"></i>
+                        <span>المعلومات الأساسية</span>
+                    </div>
+                    <div :class="['text-center', currentStep >= 2 ? 'text-seu' : 'text-muted']">
+                        <i class="bi bi-mortarboard fs-4 d-block"></i>
+                        <span>المؤهلات الأكاديمية</span>
+                    </div>
+                    <div :class="['text-center', currentStep >= 3 ? 'text-seu' : 'text-muted']">
+                        <i class="bi bi-book fs-4 d-block"></i>
+                        <span>الرغبات الدراسية</span>
+                    </div>
+                    <div :class="['text-center', currentStep >= 4 ? 'text-seu' : 'text-muted']">
+                        <i class="bi bi-check-circle fs-4 d-block"></i>
+                        <span>الإقرار والإرسال</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="container" v-if="!submitted">
+            <div class="row">
+                <!-- النموذج الرئيسي -->
+                <div class="col-lg-8">
+                    <!-- الخطوة 1: المعلومات الأساسية -->
+                    <div class="form-card" v-show="currentStep === 1">
+                        <h3><i class="bi bi-person-circle me-2"></i> المعلومات الأساسية للمتقدم</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="applicationType" class="form-label">نوع التقديم</label>
+                                <select class="form-select" id="applicationType" v-model="formData.applicationType" @change="onApplicationTypeChange">
+                                    <option value="" disabled selected>اختر نوع التقديم</option>
+                                    <option value="new">طالب جديد</option>
+                                    <option value="bridging">تجسير</option>
+                                    <option value="diploma">دبلوم</option>
+                                    <option value="graduate">دراسات عليا</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="studyLevel" class="form-label">المرحلة الدراسية المطلوبة</label>
+                                <select class="form-select" id="studyLevel" v-model="formData.studyLevel" @change="onStudyLevelChange">
+                                    <option value="" disabled selected>اختر المرحلة الدراسية</option>
+                                    <option value="bachelor">بكالوريوس</option>
+                                    <option value="diploma">دبلوم تطبيقي</option>
+                                    <option value="master">ماجستير</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- قسم التجسير (يظهر فقط إذا كان نوع التقديم تجسير) -->
+                        <div class="bridging-section" v-if="formData.applicationType === 'bridging'">
+                            <h5 style="color: var(--seu-deep-blue); font-weight: 900;">
+                                <i class="bi bi-arrow-repeat me-2"></i> معلومات التجسير الأكاديمي
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="transferredHours" class="form-label">عدد الساعات المعادلة</label>
+                                    <input type="number" class="form-control" id="transferredHours" v-model="formData.transferredHours" 
+                                           min="0" max="60" placeholder="عدد الساعات المعادلة من الدبلوم">
+                                    <div class="form-text">أدخل عدد الساعات التي تمت معادلتها من برنامج الدبلوم</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="previousDiploma" class="form-label">التخصص السابق</label>
+                                    <input type="text" class="form-control" id="previousDiploma" v-model="formData.previousDiploma" 
+                                           placeholder="التخصص الذي درسته في الدبلوم">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mt-4 mb-3" style="color: var(--seu-deep-blue); font-weight: 900;">بيانات الهوية</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="fullName" class="form-label">الاسم الرباعي (كما في الهوية)</label>
+                                <input type="text" class="form-control" id="fullName" v-model="formData.fullName" placeholder="أدخل الاسم الرباعي">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="nationalId" class="form-label">رقم الهوية / الإقامة</label>
+                                <input type="text" class="form-control" id="nationalId" v-model="formData.nationalId" placeholder="10 أو 14 رقم">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">البريد الإلكتروني</label>
+                                <input type="email" class="form-control" id="email" v-model="formData.email" placeholder="example@domain.com">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">رقم الجوال</label>
+                                <input type="tel" class="form-control" id="phone" v-model="formData.phone" placeholder="05xxxxxxxx">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="previousEducation" class="form-label">المسار التعليمي السابق</label>
+                                <select class="form-select" id="previousEducation" v-model="formData.previousEducation">
+                                    <option value="" disabled selected>اختر المؤهل السابق</option>
+                                    <option value="secondary">ثانوي</option>
+                                    <option value="diploma">دبلوم</option>
+                                    <option value="bachelor">بكالوريوس</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <div></div>
+                            <button class="btn btn-seu-primary" @click="nextStep" :disabled="!validateStep1()">
+                                التالي <i class="bi bi-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- الخطوة 2: المؤهلات الأكاديمية -->
+                    <div class="form-card" v-show="currentStep === 2">
+                        <h3><i class="bi bi-mortarboard me-2"></i> المؤهلات الأكاديمية</h3>
+                        
+                        <div class="alert alert-info alert-validation">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>ملاحظة:</strong> المعدل الأدنى للقبول في برامج البكالوريوس هو 70%، ولبرامج الماجستير 75%
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="gpa" class="form-label">المعدل التراكمي (%)</label>
+                                <input type="number" class="form-control" id="gpa" v-model="formData.gpa" 
+                                       min="0" max="100" step="0.01" @input="onGPAChange">
+                                <div class="gpa-indicator">
+                                    <div class="gpa-fill" :style="{width: formData.gpa ? (formData.gpa + '%') : '0%'}"></div>
+                                </div>
+                                <div class="form-text text-danger" v-if="formData.gpa && formData.gpa < 70 && formData.studyLevel === 'bachelor'">
+                                    <i class="bi bi-exclamation-triangle"></i> المعدل أقل من الحد الأدنى للبكالوريوس (70%)
+                                </div>
+                                <div class="form-text text-danger" v-if="formData.gpa && formData.gpa < 75 && formData.studyLevel === 'master'">
+                                    <i class="bi bi-exclamation-triangle"></i> المعدل أقل من الحد الأدنى للماجستير (75%)
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="testScore" class="form-label">درجة اختبار القدرات / STEP (اختياري)</label>
+                                <input type="number" class="form-control" id="testScore" v-model="formData.testScore" min="0" max="100">
+                                <div class="form-text">مطلوب للتخصصات التي تتطلب اختبار قدرات</div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success mt-4" v-if="formData.gpa >= 70 && filteredSpecialties.length > 0">
+                            <i class="bi bi-check-circle me-2"></i>
+                            بناءً على معدلك ({{ formData.gpa }}%)، التخصصات المتاحة لك هي:
+                        </div>
+                        
+                        <div class="alert alert-danger mt-4" v-if="formData.gpa && formData.gpa < 70 && formData.studyLevel === 'bachelor'">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>تنبيه:</strong> معدلك أقل من الحد الأدنى للقبول في برامج البكالوريوس (70%). لا يمكنك التقدم لأي تخصص بكالوريوس.
+                        </div>
+                        
+                        <div class="row mt-3" v-if="formData.gpa >= 70 && filteredSpecialties.length > 0">
+                            <div class="col-12">
+                                <h5 style="color: var(--seu-deep-blue); font-weight: 900;">التخصصات المتاحة</h5>
+                            </div>
+                            <div class="col-md-6" v-for="specialty in filteredSpecialties" :key="specialty.id">
+                                <div class="specialty-card" @click="selectSpecialty(specialty)" :class="{selected: formData.specialty === specialty.id}">
+                                    <div class="specialty-title">{{ specialty.name }}</div>
+                                    <div class="specialty-requirements">
+                                        <i class="bi bi-check-lg"></i> الحد الأدنى: {{ specialty.minGPA }}%
+                                        <span v-if="specialty.testRequired"> | يتطلب اختبار قدرات</span>
+                                        <br>
+                                        <small><i class="bi bi-building"></i> {{ specialty.college }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-seu-secondary" @click="prevStep">
+                                <i class="bi bi-arrow-right"></i> السابق
+                            </button>
+                            <button class="btn btn-seu-primary" @click="nextStep" :disabled="!validateStep2()">
+                                التالي <i class="bi bi-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- الخطوة 3: الرغبات الدراسية -->
+                    <div class="form-card" v-show="currentStep === 3">
+                        <h3><i class="bi bi-book me-2"></i> الرغبات الدراسية</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="specialty" class="form-label">التخصص المرغوب</label>
+                                <select class="form-select" id="specialty" v-model="formData.specialty" @change="onSpecialtyChange">
+                                    <option value="" disabled selected>اختر التخصص</option>
+                                    <option v-for="specialty in filteredSpecialties" :value="specialty.id" :key="specialty.id">
+                                        {{ specialty.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="studyMode" class="form-label">نوع الدراسة</label>
+                                <select class="form-select" id="studyMode" v-model="formData.studyMode" @change="onStudyModeChange">
+                                    <option value="" disabled selected>اختر نوع الدراسة</option>
+                                    <option value="hybrid">مدمج (حضوري + عن بعد)</option>
+                                    <option value="online">عن بُعد بالكامل</option>
+                                    <option value="fulltime">حضوري كامل</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row" v-if="formData.studyLevel === 'bachelor' || formData.studyLevel === 'master'">
+                            <div class="col-md-6 mb-3">
+                                <label for="hours" class="form-label">عدد الساعات المسجلة</label>
+                                <input type="number" class="form-control" id="hours" v-model="formData.hours" 
+                                       :min="minHours" :max="maxHours" step="1">
+                                <div class="form-text">الحد الأدنى: {{ minHours }} ساعة، الحد الأقصى: {{ maxHours }} ساعة</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3" v-if="formData.applicationType === 'bridging'">
+                                <label class="form-label">الساعات المتبقية بعد المعادلة</label>
+                                <div class="form-control" style="background-color: #f8f9fa;">
+                                    <strong>{{ remainingHours }} ساعة</strong>
+                                    <div class="form-text">({{ formData.hours }} ساعة - {{ formData.transferredHours || 0 }} ساعة معادلة)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h5 style="color: var(--seu-deep-blue); font-weight: 900;">اختر فرع الجامعة</h5>
+                                <p class="text-muted">اختر الفرع الأقرب إليك (للمقابلات والاختبارات الحضورية)</p>
+                                
+                                <div class="alert alert-warning" v-if="!formData.branch">
+                                    <i class="bi bi-exclamation-triangle me-2"></i> يجب اختيار فرع الجامعة للمتابعة
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4 mb-2" v-for="branch in branches" :key="branch.id">
+                                        <div class="branch-card" @click="selectBranch(branch)" :class="{selected: formData.branch === branch.id}">
+                                            <div class="branch-city">{{ branch.city }}</div>
+                                            <div class="branch-region">{{ branch.region }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-seu-secondary" @click="prevStep">
+                                <i class="bi bi-arrow-right"></i> السابق
+                            </button>
+                            <button class="btn btn-seu-primary" @click="nextStep" :disabled="!validateStep3()">
+                                التالي <i class="bi bi-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- الخطوة 4: الإقرار والإرسال -->
+                    <div class="form-card" v-show="currentStep === 4">
+                        <h3><i class="bi bi-check-circle me-2"></i> الإقرار والموافقة</h3>
+                        
+                        <div class="alert alert-info">
+                            <h5 style="font-weight: 900;"><i class="bi bi-info-circle me-2"></i> ملخص الطلب</h5>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <p><strong>الاسم:</strong> {{ formData.fullName }}</p>
+                                    <p><strong>المرحلة:</strong> {{ studyLevelLabel }}</p>
+                                    <p><strong>التخصص:</strong> {{ selectedSpecialtyName }}</p>
+                                    <p><strong>الفرع:</strong> {{ selectedBranchName }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>المعدل:</strong> {{ formData.gpa }}%</p>
+                                    <p><strong>نوع الدراسة:</strong> {{ studyModeLabel }}</p>
+                                    <p><strong>نوع التقديم:</strong> {{ applicationTypeLabel }}</p>
+                                    <p><strong>الرسوم الإجمالية:</strong> {{ formatCurrency(totalFees) }} ريال</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fee-breakdown">
+                            <h6 style="font-weight: 900; color: var(--seu-deep-blue);">تفصيل الرسوم:</h6>
+                            <div class="fee-item">
+                                <span>رسوم الساعات:</span>
+                                <span>{{ formatCurrency(baseFees) }} ريال</span>
+                            </div>
+                            <div class="fee-item" v-if="formData.studyMode !== 'online' && formData.studyLevel === 'bachelor'">
+                                <span>رسوم خدمات حضورية:</span>
+                                <span>{{ formatCurrency(labFees) }} ريال</span>
+                            </div>
+                            <div class="fee-item">
+                                <span>الرسوم الإدارية:</span>
+                                <span>{{ formatCurrency(adminFees) }} ريال</span>
+                            </div>
+                            <div class="fee-item">
+                                <span>المجموع قبل الضريبة:</span>
+                                <span>{{ formatCurrency(subtotal) }} ريال</span>
+                            </div>
+                            <div class="fee-item fee-vat">
+                                <span>ضريبة القيمة المضافة (15%):</span>
+                                <span>{{ formatCurrency(vatAmount) }} ريال</span>
+                            </div>
+                            <div class="fee-item" style="font-weight: 900; border-top: 1px solid #ddd; padding-top: 0.5rem;">
+                                <span>الإجمالي النهائي:</span>
+                                <span>{{ formatCurrency(totalFees) }} ريال</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5 style="color: var(--seu-deep-blue); font-weight: 900;">التوقيع الإلكتروني</h5>
+                            <p class="text-muted">يرجى التوقيع في المربع أدناه للإقرار بصحة البيانات</p>
+                            
+                            <div class="signature-container" @mousedown="startDrawing" @mousemove="draw" @mouseup="stopDrawing" @mouseleave="stopDrawing">
+                                <div class="signature-placeholder" v-if="!signatureData">
+                                    <i class="bi bi-pen"></i> انقر واسحب للتوقيع هنا
+                                </div>
+                                <canvas ref="signatureCanvas" class="signature-canvas"></canvas>
+                                <button class="btn btn-sm btn-seu-secondary clear-signature" @click="clearSignature" v-if="signatureData">
+                                    <i class="bi bi-eraser"></i> مسح التوقيع
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-check mb-4 mt-4">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" v-model="formData.agreeTerms">
+                            <label class="form-check-label" for="agreeTerms">
+                                <strong>أقر بصحة البيانات المذكورة أعلاه، وأوافق على:</strong>
+                            </label>
+                            <ul class="mt-2">
+                                <li>شروط القبول والالتحاق بالجامعة السعودية الإلكترونية.</li>
+                                <li>دفع الرسوم الدراسية وفق الجدول الزمني المعتمد.</li>
+                                <li>الالتزام بأنظمة ولوائح الجامعة الأكاديمية والإدارية.</li>
+                                <li>صحة المعلومات المقدمة وأتحمل المسؤولية في حال اكتشاف أي معلومات غير صحيحة.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-seu-secondary" @click="prevStep">
+                                <i class="bi bi-arrow-right"></i> السابق
+                            </button>
+                            <button class="btn btn-seu-primary" @click="submitForm" :disabled="!formData.agreeTerms || !signatureData">
+                                <i class="bi bi-send me-2"></i> إرسال الطلب واعتماد القبول الذكي
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- الملخص الجانبي -->
+                <div class="col-lg-4">
+                    <div class="summary-card sticky-top" style="top: 20px;">
+                        <div class="summary-title">
+                            <i class="bi bi-calculator me-2"></i> ملخص الرسوم التقديرية
+                        </div>
+                        
+                        <div v-if="formData.studyLevel">
+                            <div class="summary-item">
+                                <span>المرحلة الدراسية:</span>
+                                <strong>{{ studyLevelLabel }}</strong>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <span>نوع الدراسة:</span>
+                                <strong>{{ studyModeLabel }}</strong>
+                            </div>
+                            
+                            <div v-if="formData.studyLevel === 'bachelor' || formData.studyLevel === 'master'">
+                                <div class="summary-item">
+                                    <span>عدد الساعات:</span>
+                                    <strong>{{ formData.hours || 0 }} ساعة</strong>
+                                </div>
+                                
+                                <div class="summary-item" v-if="formData.applicationType === 'bridging'">
+                                    <span>ساعات معادلة:</span>
+                                    <strong>{{ formData.transferredHours || 0 }} ساعة</strong>
+                                </div>
+                                
+                                <div class="summary-item">
+                                    <span>سعر الساعة:</span>
+                                    <strong>{{ formatCurrency(pricePerHour) }} ريال</strong>
+                                </div>
+                                
+                                <div class="summary-item">
+                                    <span>رسوم الساعات:</span>
+                                    <strong>{{ formatCurrency(hoursFees) }} ريال</strong>
+                                </div>
+                            </div>
+                            
+                            <div v-else-if="formData.studyLevel === 'diploma'">
+                                <div class="summary-item">
+                                    <span>رسوم البرنامج:</span>
+                                    <strong>{{ formatCurrency(diplomaFees) }} ريال</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <span>رسوم إدارية:</span>
+                                <strong>{{ formatCurrency(adminFees) }} ريال</strong>
+                            </div>
+                            
+                            <div v-if="formData.studyMode !== 'online' && formData.studyLevel === 'bachelor'">
+                                <div class="summary-item">
+                                    <span>رسوم خدمات حضورية:</span>
+                                    <strong>{{ formatCurrency(labFees) }} ريال</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <span>المجموع قبل الضريبة:</span>
+                                <strong>{{ formatCurrency(subtotal) }} ريال</strong>
+                            </div>
+                            
+                            <div class="summary-item">
+                                <span>ضريبة القيمة المضافة (15%):</span>
+                                <strong>{{ formatCurrency(vatAmount) }} ريال</strong>
+                            </div>
+                            
+                            <div class="summary-total">
+                                <span>الإجمالي النهائي:</span>
+                                <span>{{ formatCurrency(totalFees) }} ريال</span>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    هذه الرسوم تقديرية وقد تخضع للتعديل حسب الخطة الدراسية الفعلية.
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div v-else class="text-center text-muted py-4">
+                            <i class="bi bi-calculator fs-1 d-block mb-2"></i>
+                            <p>سيظهر ملخص الرسوم هنا بعد تعبئة البيانات الأساسية</p>
+                        </div>
+                    </div>
+                    
+                    <!-- معلومات الاتصال -->
+                    <div class="summary-card">
+                        <div class="summary-title">
+                            <i class="bi bi-headset me-2"></i> الدعم والمساعدة
+                        </div>
+                        <div class="summary-item">
+                            <span><i class="bi bi-telephone me-2"></i> الدعم الفني:</span>
+                            <strong>920033555</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span><i class="bi bi-envelope me-2"></i> البريد:</span>
+                            <strong>admission@seu.edu.sa</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span><i class="bi bi-globe me-2"></i> الموقع:</span>
+                            <strong>seu.edu.sa</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شاشة النجاح بعد الإرسال -->
+        <div class="container" v-if="submitted">
+            <div class="success-container">
+                <div class="success-icon">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                
+                <h2 style="color: var(--seu-deep-blue); font-weight: 900;">تم تقديم طلبك بنجاح!</h2>
+                
+                <div class="ref-number">
+                    {{ referenceNumber }}
+                </div>
+                
+                <div class="success-message">
+                    <p>
+                        شكراً لك يا <span class="student-name">{{ formData.fullName }}</span>.. تم تقديم طلبك بنجاح!
+                    </p>
+                    
+                    <p>
+                        لقد تم إرسال بياناتك بنجاح إلى عمادة القبول والتسجيل. سيتم التواصل معك قريباً من قبل موظف الشؤون الإدارية والمالية لاستكمال بقية الإجراءات، وسداد رسوم المقرر الدراسي، وتأكيد قبولك النهائي.
+                    </p>
+                    
+                    <p class="mt-4" style="font-weight: 900;">
+                        نتمنى لك رحلة أكاديمية موفقة في الجامعة السعودية الإلكترونية.
+                    </p>
+                </div>
+                
+                <div class="mt-5">
+                    <button class="btn btn-seu-secondary" @click="resetForm">
+                        <i class="bi bi-arrow-clockwise me-2"></i> تقديم طلب جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تذييل الصفحة -->
+        <footer class="mt-5 py-4" style="background-color: var(--seu-deep-blue); color: white;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 style="font-weight: 900;">الجامعة السعودية الإلكترونية</h5>
+                        <p>نحو مجتمع معرفي مبتكر</p>
+                        <p>جميع الحقوق محفوظة &copy; 2025</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p>نظام القبول والتسجيل الإلكتروني</p>
+                        <p>الإصدار 3.0 (محدث 2025)</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    currentStep: 1,
+                    submitted: false,
+                    referenceNumber: '',
+                    isDrawing: false,
+                    signatureData: null,
+                    
+                    formData: {
+                        applicationType: '',
+                        studyLevel: '',
+                        fullName: '',
+                        nationalId: '',
+                        email: '',
+                        phone: '',
+                        previousEducation: '',
+                        gpa: null,
+                        testScore: null,
+                        specialty: '',
+                        studyMode: '',
+                        hours: 15,
+                        transferredHours: 0,
+                        previousDiploma: '',
+                        branch: '',
+                        agreeTerms: false
+                    },
+                    
+                    // قائمة التخصصات المحدثة لعام 2025
+                    specialties: [
+                        // كلية الحوسبة والمعلوماتية
+                        { id: 'it', name: 'تقنية المعلومات', level: 'bachelor', college: 'الحوسبة والمعلوماتية', minGPA: 75, testRequired: false },
+                        { id: 'cs', name: 'علوم الحاسب', level: 'bachelor', college: 'الحوسبة والمعلوماتية', minGPA: 80, testRequired: false },
+                        { id: 'data_science', name: 'علم البيانات', level: 'bachelor', college: 'الحوسبة والمعلوماتية', minGPA: 85, testRequired: true },
+                        { id: 'ai', name: 'الذكاء الاصطناعي', level: 'bachelor', college: 'الحوسبة والمعلوماتية', minGPA: 85, testRequired: true },
+
+                        // كلية العلوم الإدارية والمالية
+                        { id: 'business', name: 'إدارة الأعمال', level: 'bachelor', college: 'العلوم الإدارية والمالية', minGPA: 70, testRequired: false },
+                        { id: 'accounting', name: 'المحاسبة', level: 'bachelor', college: 'العلوم الإدارية والمالية', minGPA: 70, testRequired: false },
+                        { id: 'finance', name: 'المالية', level: 'bachelor', college: 'العلوم الإدارية والمالية', minGPA: 75, testRequired: false },
+                        { id: 'e_commerce', name: 'التجارة الإلكترونية', level: 'bachelor', college: 'العلوم الإدارية والمالية', minGPA: 70, testRequired: false },
+
+                        // كلية العلوم والدراسات النظرية
+                        { id: 'law', name: 'القانون', level: 'bachelor', college: 'العلوم والدراسات النظرية', minGPA: 75, testRequired: false },
+                        { id: 'english', name: 'اللغة الإنجليزية والترجمة', level: 'bachelor', college: 'العلوم والدراسات النظرية', minGPA: 70, testRequired: true },
+                        { id: 'digital_media', name: 'الإعلام الرقمي', level: 'bachelor', college: 'العلوم والدراسات النظرية', minGPA: 70, testRequired: false },
+
+                        // كلية العلوم الصحية
+                        { id: 'health_info', name: 'المعلوماتية الصحية', level: 'bachelor', college: 'العلوم الصحية', minGPA: 75, testRequired: false },
+                        { id: 'public_health', name: 'الصحة العامة', level: 'bachelor', college: 'العلوم الصحية', minGPA: 75, testRequired: false },
+
+                        // الدراسات العليا (ماجستير)
+                        { id: 'mba', name: 'إدارة الأعمال (MBA)', level: 'master', college: 'الدراسات العليا', minGPA: 75, testRequired: true },
+                        { id: 'cyber_security', name: 'الأمن السيبراني', level: 'master', college: 'الدراسات العليا', minGPA: 80, testRequired: true },
+                        { id: 'translation_ms', name: 'تقنيات الترجمة', level: 'master', college: 'الدراسات العليا', minGPA: 75, testRequired: false },
+                        { id: 'marketing_ms', name: 'التسويق الرقمي', level: 'master', college: 'الدراسات العليا', minGPA: 75, testRequired: false },
+
+                        // الكلية التطبيقية (دبلومات)
+                        { id: 'hr_dip', name: 'دبلوم الموارد البشرية', level: 'diploma', college: 'الكلية التطبيقية', minGPA: 60, testRequired: false },
+                        { id: 'supply_chain_dip', name: 'دبلوم سلاسل الإمداد', level: 'diploma', college: 'الكلية التطبيقية', minGPA: 60, testRequired: false },
+                        { id: 'hotel_mgmt_dip', name: 'دبلوم إدارة الفنادق والفعاليات', level: 'diploma', college: 'الكلية التطبيقية', minGPA: 60, testRequired: false }
+                    ],
+                    
+                    // فروع الجامعة المحدثة
+                    branches: [
+                        { id: 1, city: 'الرياض', region: 'المنطقة الوسطى' },
+                        { id: 2, city: 'القصيم', region: 'المنطقة الوسطى' },
+                        { id: 3, city: 'جدة', region: 'المنطقة الغربية' },
+                        { id: 4, city: 'المدينة المنورة', region: 'المنطقة الغربية' },
+                        { id: 5, city: 'ينبع', region: 'المنطقة الغربية' },
+                        { id: 6, city: 'العلا', region: 'المنطقة الغربية' },
+                        { id: 7, city: 'الدمام', region: 'المنطقة الشرقية' },
+                        { id: 8, city: 'الأحساء', region: 'المنطقة الشرقية' },
+                        { id: 9, city: 'الجبيل', region: 'المنطقة الشرقية' },
+                        { id: 10, city: 'أبها', region: 'المنطقة الجنوبية' },
+                        { id: 11, city: 'جازان', region: 'المنطقة الجنوبية' },
+                        { id: 12, city: 'نجران', region: 'المنطقة الجنوبية' },
+                        { id: 13, city: 'تبوك', region: 'المنطقة الشمالية' },
+                        { id: 14, city: 'حائل', region: 'المنطقة الشمالية' },
+                        { id: 15, city: 'القريات', region: 'المنطقة الشمالية' }
+                    ],
+                    
+                    // أسعار الساعات المحدثة
+                    prices: {
+                        bachelor: 265,
+                        master: 2250,
+                        master_translation: 1800,
+                        diploma: 8000 // رسوم البرنامج كاملاً (تتراوح بين 8,000 إلى 20,000 ريال)
+                    },
+                    
+                    // رسوم إدارية
+                    adminFees: 500,
+                    
+                    // سياق الرسم للتوقيع
+                    ctx: null
+                }
+            },
+            
+            computed: {
+                progressWidth() {
+                    return (this.currentStep * 25) + '%';
+                },
+                
+                applicationTypeLabel() {
+                    const labels = {
+                        new: 'طالب جديد',
+                        bridging: 'تجسير',
+                        diploma: 'دبلوم',
+                        graduate: 'دراسات عليا'
+                    };
+                    return this.formData.applicationType ? labels[this.formData.applicationType] : '';
+                },
+                
+                studyLevelLabel() {
+                    const labels = {
+                        bachelor: 'بكالوريوس',
+                        diploma: 'دبلوم تطبيقي',
+                        master: 'ماجستير'
+                    };
+                    return this.formData.studyLevel ? labels[this.formData.studyLevel] : '';
+                },
+                
+                studyModeLabel() {
+                    const labels = {
+                        hybrid: 'مدمج (حضوري + عن بعد)',
+                        online: 'عن بُعد بالكامل',
+                        fulltime: 'حضوري كامل'
+                    };
+                    return this.formData.studyMode ? labels[this.formData.studyMode] : '';
+                },
+                
+                // التخصصات المفلترة حسب المعدل والمرحلة
+                filteredSpecialties() {
+                    if (!this.formData.gpa || !this.formData.studyLevel) return [];
+                    
+                    return this.specialties.filter(specialty => {
+                        // فلترة حسب المرحلة الدراسية
+                        if (specialty.level !== this.formData.studyLevel) return false;
+                        
+                        // فلترة حسب المعدل
+                        if (this.formData.gpa < specialty.minGPA) return false;
+                        
+                        // إذا كان التخصص يتطلب اختبار قدرات ولم يتم إدخاله
+                        if (specialty.testRequired && (!this.formData.testScore || this.formData.testScore < 50)) return false;
+                        
+                        return true;
+                    });
+                },
+                
+                selectedSpecialtyName() {
+                    if (!this.formData.specialty) return 'لم يتم الاختيار';
+                    const specialty = this.specialties.find(s => s.id === this.formData.specialty);
+                    return specialty ? specialty.name : 'غير معروف';
+                },
+                
+                selectedBranchName() {
+                    if (!this.formData.branch) return 'لم يتم الاختيار';
+                    const branch = this.branches.find(b => b.id === this.formData.branch);
+                    return branch ? `${branch.city} - ${branch.region}` : 'غير معروف';
+                },
+                
+                // حساب سعر الساعة حسب المرحلة والتخصص
+                pricePerHour() {
+                    if (this.formData.studyLevel === 'bachelor') {
+                        return this.prices.bachelor;
+                    } else if (this.formData.studyLevel === 'master') {
+                        // إذا كان تخصص تقنيات الترجمة
+                        if (this.formData.specialty === 'translation_ms') {
+                            return this.prices.master_translation;
+                        }
+                        return this.prices.master;
+                    }
+                    return 0;
+                },
+                
+                // الحد الأدنى والأقصى للساعات
+                minHours() {
+                    if (this.formData.studyLevel === 'bachelor') return 12;
+                    if (this.formData.studyLevel === 'master') return 6;
+                    return 0;
+                },
+                
+                maxHours() {
+                    if (this.formData.studyLevel === 'bachelor') return 18;
+                    if (this.formData.studyLevel === 'master') return 12;
+                    return 0;
+                },
+                
+                // الساعات المتبقية بعد معادلة التجسير
+                remainingHours() {
+                    const totalHours = this.formData.hours || 0;
+                    const transferred = this.formData.transferredHours || 0;
+                    return Math.max(0, totalHours - transferred);
+                },
+                
+                // رسوم الساعات (مع مراعاة التجسير)
+                hoursFees() {
+                    if (this.formData.studyLevel === 'bachelor' || this.formData.studyLevel === 'master') {
+                        let hours = this.formData.hours || 0;
+                        
+                        // خصم الساعات المعادلة في حالة التجسير
+                        if (this.formData.applicationType === 'bridging') {
+                            hours = this.remainingHours;
+                        }
+                        
+                        return hours * this.pricePerHour;
+                    }
+                    return 0;
+                },
+                
+                // رسوم الدبلوم
+                diplomaFees() {
+                    return this.prices.diploma;
+                },
+                
+                // رسوم الخدمات الحضورية (للدراسة المدمجة في البكالوريوس)
+                labFees() {
+                    if (this.formData.studyLevel === 'bachelor' && this.formData.studyMode !== 'online') {
+                        return 500;
+                    }
+                    return 0;
+                },
+                
+                // الرسوم الأساسية قبل الضريبة
+                baseFees() {
+                    let base = this.hoursFees;
+                    
+                    if (this.formData.studyLevel === 'diploma') {
+                        base = this.diplomaFees;
+                    }
+                    
+                    return base;
+                },
+                
+                // المجموع الفرعي قبل الضريبة
+                subtotal() {
+                    let total = this.baseFees + this.adminFees;
+                    
+                    // إضافة رسوم الخدمات الحضورية للبكالوريوس المدمج
+                    if (this.formData.studyLevel === 'bachelor' && this.formData.studyMode !== 'online') {
+                        total += this.labFees;
+                    }
+                    
+                    return total;
+                },
+                
+                // ضريبة القيمة المضافة
+                vatAmount() {
+                    return this.subtotal * 0.15;
+                },
+                
+                // الإجمالي النهائي مع الضريبة
+                totalFees() {
+                    return this.subtotal + this.vatAmount;
+                }
+            },
+            
+            methods: {
+                nextStep() {
+                    if (this.currentStep < 4) {
+                        this.currentStep++;
+                    }
+                },
+                
+                prevStep() {
+                    if (this.currentStep > 1) {
+                        this.currentStep--;
+                    }
+                },
+                
+                onApplicationTypeChange() {
+                    // إذا كان نوع التقديم تجسير، تأكد من أن المرحلة هي بكالوريوس
+                    if (this.formData.applicationType === 'bridging') {
+                        this.formData.studyLevel = 'bachelor';
+                    }
+                },
+                
+                onStudyLevelChange() {
+                    // إعادة تعيين القيم الافتراضية عند تغيير المرحلة
+                    if (this.formData.studyLevel === 'bachelor') {
+                        this.formData.hours = 15;
+                    } else if (this.formData.studyLevel === 'master') {
+                        this.formData.hours = 9;
+                    } else if (this.formData.studyLevel === 'diploma') {
+                        this.formData.hours = 0;
+                    }
+                },
+                
+                onGPAChange() {
+                    // إذا كان المعدل أقل من الحد الأدنى، إعادة تعيين التخصص
+                    if (this.formData.studyLevel === 'bachelor' && this.formData.gpa < 70) {
+                        this.formData.specialty = '';
+                    } else if (this.formData.studyLevel === 'master' && this.formData.gpa < 75) {
+                        this.formData.specialty = '';
+                    }
+                },
+                
+                onSpecialtyChange() {
+                    // يمكن إضافة منطق إضافي هنا
+                },
+                
+                onStudyModeChange() {
+                    // يمكن إضافة منطق إضافي هنا
+                },
+                
+                selectSpecialty(specialty) {
+                    this.formData.specialty = specialty.id;
+                },
+                
+                selectBranch(branch) {
+                    this.formData.branch = branch.id;
+                },
+                
+                validateStep1() {
+                    return this.formData.applicationType && 
+                           this.formData.studyLevel && 
+                           this.formData.fullName && 
+                           this.formData.nationalId && 
+                           this.formData.email && 
+                           this.formData.phone && 
+                           this.formData.previousEducation;
+                },
+                
+                validateStep2() {
+                    // التحقق من المعدل
+                    if (!this.formData.gpa) return false;
+                    
+                    if (this.formData.studyLevel === 'bachelor' && this.formData.gpa < 70) return false;
+                    if (this.formData.studyLevel === 'master' && this.formData.gpa < 75) return false;
+                    
+                    // التحقق من وجود تخصصات متاحة
+                    if (this.filteredSpecialties.length === 0) return false;
+                    
+                    return true;
+                },
+                
+                validateStep3() {
+                    return this.formData.specialty && 
+                           this.formData.studyMode && 
+                           this.formData.branch;
+                },
+                
+                // وظائف التوقيع الإلكتروني
+                startDrawing(event) {
+                    this.isDrawing = true;
+                    const canvas = this.$refs.signatureCanvas;
+                    const rect = canvas.getBoundingClientRect();
+                    
+                    if (!this.ctx) {
+                        this.ctx = canvas.getContext('2d');
+                        this.ctx.lineWidth = 2;
+                        this.ctx.lineCap = 'round';
+                        this.ctx.strokeStyle = '#003366';
+                    }
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(
+                        event.clientX - rect.left,
+                        event.clientY - rect.top
+                    );
+                },
+                
+                draw(event) {
+                    if (!this.isDrawing) return;
+                    
+                    const canvas = this.$refs.signatureCanvas;
+                    const rect = canvas.getBoundingClientRect();
+                    
+                    this.ctx.lineTo(
+                        event.clientX - rect.left,
+                        event.clientY - rect.top
+                    );
+                    this.ctx.stroke();
+                },
+                
+                stopDrawing() {
+                    if (this.isDrawing) {
+                        this.isDrawing = false;
+                        this.ctx.closePath();
+                        this.saveSignature();
+                    }
+                },
+                
+                saveSignature() {
+                    const canvas = this.$refs.signatureCanvas;
+                    this.signatureData = canvas.toDataURL();
+                },
+                
+                clearSignature() {
+                    const canvas = this.$refs.signatureCanvas;
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    this.signatureData = null;
+                },
+                
+                submitForm() {
+                    // توليد رقم مرجعي عشوائي يبدأ بـ 2025
+                    const randomNum = Math.floor(1000 + Math.random() * 9000);
+                    const year = new Date().getFullYear();
+                    this.referenceNumber = `${year}-${randomNum}`;
+                    
+                    // عرض شاشة النجاح
+                    this.submitted = true;
+                    
+                    // في تطبيق حقيقي، هنا سيتم إرسال البيانات إلى الخادم
+                    console.log('تم إرسال النموذج:', {
+                        ...this.formData,
+                        signature: this.signatureData,
+                        referenceNumber: this.referenceNumber,
+                        totalFees: this.totalFees
+                    });
+                },
+                
+                resetForm() {
+                    // إعادة تعيين النموذج
+                    this.currentStep = 1;
+                    this.submitted = false;
+                    this.referenceNumber = '';
+                    this.signatureData = null;
+                    
+                    // إعادة تعيين جميع حقول النموذج
+                    this.formData = {
+                        applicationType: '',
+                        studyLevel: '',
+                        fullName: '',
+                        nationalId: '',
+                        email: '',
+                        phone: '',
+                        previousEducation: '',
+                        gpa: null,
+                        testScore: null,
+                        specialty: '',
+                        studyMode: '',
+                        hours: 15,
+                        transferredHours: 0,
+                        previousDiploma: '',
+                        branch: '',
+                        agreeTerms: false
+                    };
+                    
+                    // مسح التوقيع
+                    if (this.$refs.signatureCanvas) {
+                        const ctx = this.$refs.signatureCanvas.getContext('2d');
+                        ctx.clearRect(0, 0, this.$refs.signatureCanvas.width, this.$refs.signatureCanvas.height);
+                    }
+                },
+                
+                formatCurrency(value) {
+                    return new Intl.NumberFormat('ar-SA').format(value);
+                }
+            },
+            
+            mounted() {
+                // تهيئة لوحة التوقيع
+                const canvas = this.$refs.signatureCanvas;
+                if (canvas) {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+                                      </html>
